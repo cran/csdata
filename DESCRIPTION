@@ -1,6 +1,6 @@
 Package: csdata
 Title: Structural Data for Norway
-Version: 2023.4.21
+Version: 2023.5.22
 Authors@R: c(
   person(c("Richard","Aubrey"), "White", email = "hello@rwhite.no", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-6747-1726")
@@ -22,9 +22,9 @@ Suggests: testthat, broom, crayon, dplyr, forcats, fs, geojsonio,
         rmapshaper, rstudioapi, stringr, sp, sf, tidyr, zoo
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
-Date/Publication: 2023-04-21 11:02:35 UTC
+Date/Publication: 2023-05-22 10:10:18 UTC
 NeedsCompilation: no
-Packaged: 2023-04-21 10:39:22 UTC; raw996
+Packaged: 2023-05-22 08:41:58 UTC; raw996
 Author: Richard Aubrey White [aut, cre]
     (<https://orcid.org/0000-0002-6747-1726>),
   Chi Zhang [aut] (<https://orcid.org/0000-0003-0501-5909>)
