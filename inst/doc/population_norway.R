@@ -21,7 +21,34 @@ q <- q + labs(title = "Norway (nation_nor)")
 q
 
 ## ----echo=FALSE, results='asis'-----------------------------------------------
-d <- csdata::nor_population_by_age_cats()[csdata::nor_locations_names(),on="location_code"][granularity_geo %in% c("nation","county") & calyear>=2005]
+d <- csdata::nor_population_by_age_cats()[csdata::nor_locations_names(),on="location_code"][granularity_geo %in% c("nation", "georegion") & calyear>=2005]
+setorder(d,location_order,calyear)
+d[, location_name := factor(location_name, levels = unique(location_name))]
+d <- d[,.(
+  location_name, 
+  calyear,
+  pop_jan1_n = formatC(pop_jan1_n, big.mark=".", decimal.mark=",", format="f", digits=0)
+)]
+
+locations <- unique(d$location_name)
+
+wd1 <- dcast.data.table(
+  d[location_name %in% locations[1:6]],
+  calyear ~ location_name,
+  value.var = "pop_jan1_n"
+)
+
+gt::gt(
+  wd1,
+  rowname_col = "calyear"
+  ) %>%
+  gt::tab_options(
+    table.width = "300px"
+  ) %>% 
+  gt::tab_header(title = "Reference table of calyear and pop_jan1_n (nation and georegion)")
+
+## ----echo=FALSE, results='asis'-----------------------------------------------
+d <- csdata::nor_population_by_age_cats()[csdata::nor_locations_names(),on="location_code"][granularity_geo %in% c("county") & calyear>=2005]
 setorder(d,location_order,calyear)
 d[, location_name := factor(location_name, levels = unique(location_name))]
 d <- d[,.(
@@ -39,7 +66,7 @@ wd1 <- dcast.data.table(
 )
 
 wd2 <- dcast.data.table(
-  d[location_name %in% locations[9:16]],
+  d[location_name %in% locations[9:15]],
   calyear ~ location_name,
   value.var = "pop_jan1_n"
 )
@@ -51,7 +78,7 @@ gt::gt(
   gt::tab_options(
     table.width = "300px"
   ) %>% 
-  gt::tab_header(title = "Reference table of calyear and pop_jan1_n")
+  gt::tab_header(title = "Reference table of calyear and pop_jan1_n (county)")
 
 gt::gt(
   wd2,
@@ -60,5 +87,5 @@ gt::gt(
   gt::tab_options(
     table.width = "300px"
   ) %>% 
-  gt::tab_header(title = "Reference table of calyear and pop_jan1_n")
+  gt::tab_header(title = "Reference table of calyear and pop_jan1_n (county)")
 
